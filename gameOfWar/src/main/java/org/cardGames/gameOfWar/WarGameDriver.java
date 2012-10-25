@@ -18,7 +18,7 @@ public class WarGameDriver {
 		if (args.length != 3) {
 			System.out
 					.println("War should be played with the following options: <ranks> <suits> <players>. E.g.:");
-			System.out.println("java -jar war.jar 4 13 2");
+			System.out.println("java -jar <War-Binary>.jar 4 13 2");
 			return;
 		}
 		try{
