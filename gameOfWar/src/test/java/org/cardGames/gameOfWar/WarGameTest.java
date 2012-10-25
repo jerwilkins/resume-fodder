@@ -24,21 +24,21 @@ public class WarGameTest {
 	
 	// Ensure that WarDecks are set up predictably
 	@Test
-	public void testDeckSetup(){
+	public void testDeckSetup() {
 		WarGame warTest1 = new WarGame(4, 13, 2);
 		// testing of deck size is taken care of in DeckImplTest
 		assertTrue(warTest1.isValidGame());
 		
 		// each player should have 26 cards
 		assertEquals(2, warTest1.getPlayers().size());
-		for(Player aPlayer : warTest1.getPlayers()){
+		for (Player aPlayer : warTest1.getPlayers()) {
 			assertEquals(26, aPlayer.getOwnPile().size());
 		}
 	}
 
 	// Test the game runner for a reduced, predictable deck
 	@Test
-	public void testWarGame(){
+	public void testWarGame() {
 		int[][][] cardsToAdd = {
 				{ {3,4}, {1,1}, {2,1}, {3,1}, {1,1}, {2,1}, {3,1}, {1,2}, {1,8}, {2,11} }, 
 				{ {2,4}, {1,1}, {2,1}, {3,1}, {1,2}, {2,2}, {3,2}, {2,3}, {1,9}, {2,12} }
@@ -55,7 +55,7 @@ public class WarGameTest {
 	
 	// This deck will require some more iterations
 	@Test
-	public void testALessConvenientDeck(){
+	public void testALessConvenientDeck() {
 		int[][][] cardsToAdd = {
 				{ {3,4}, {1,3}, {2,5}, {3,1}, {1,8} }, 
 				{ {2,4}, {1,1}, {2,1}, {3,1}, {1,2} }
@@ -69,11 +69,11 @@ public class WarGameTest {
 		int deck1Size = testWar.getPlayers().get(0).getOwnPile().size();
 		int deck2Size = testWar.getPlayers().get(1).getOwnPile().size();
 		
-		if(deck1Size > deck2Size) {
+		if (deck1Size > deck2Size) {
 			assertEquals(10, deck1Size);
 			assertEquals(0, deck2Size);
 		} 
-		else if(deck1Size < deck2Size){
+		else if (deck1Size < deck2Size) {
 			assertEquals(10, deck2Size);
 			assertEquals(0, deck1Size);
 		}
@@ -84,7 +84,7 @@ public class WarGameTest {
 	
 	// Let's see how we do with a three-person game
 	@Test
-	public void testThreePersonGame(){
+	public void testThreePersonGame() {
 		int[][][] cardsToAdd = {
 				{ {3,4}, {1,4}, {2,4}, {3,4}, {1,12} }, 
 				{ {2,4}, {1,8}, {2,8}, {3,8}, {1,10} }, 
@@ -99,11 +99,11 @@ public class WarGameTest {
 		// All games should resolve down to two players at the end
 		int deck1Size = testWar.getPlayers().get(0).getOwnPile().size();
 		int deck2Size = testWar.getPlayers().get(1).getOwnPile().size();
-		if(deck1Size > deck2Size){
+		if (deck1Size > deck2Size) {
 			assertEquals(15, deck1Size);
 			assertEquals(0, deck2Size);
 		}
-		else if(deck2Size > deck1Size){
+		else if (deck2Size > deck1Size) {
 			assertEquals(15, deck2Size);
 			assertEquals(0, deck1Size);
 		}
@@ -117,7 +117,7 @@ public class WarGameTest {
 	 * cards from last battle will go to player 1
 	 */
 	@Test
-	public void testBattle(){
+	public void testBattle() {
 		int[][][] cardsToAdd = {
 				{ {3,4}, {1,1}, {2,1}, {3,1}, {1,1}, {2,1}, {3,1}, {1,2}, {1,8}, {2,11} }, 
 				{ {2,4}, {1,1}, {2,1}, {3,1}, {1,2}, {2,2}, {3,2}, {2,3}, {1,9}, {2,12} }
@@ -140,17 +140,17 @@ public class WarGameTest {
 	
 	
 	// Method for creating throw-away piles for game testing
-	public void setupPlayersHands(int[][][] cardsToAdd){
+	public void setupPlayersHands(int[][][] cardsToAdd) {
 		this.players = new LinkedList<Player>();
 		this.piles = new LinkedList<LinkedList<Card>>();
 		
 		/* Traverse the cardsToAdd array to create players, 
 		 * their respective piles and cards {suit,rank}
 		 */
-		for(int i = 0; i < cardsToAdd.length; i++){
+		for (int i = 0; i < cardsToAdd.length; i++) {
 			this.players.add(new Player());
 			this.piles.add(new LinkedList<Card>());
-			for(int j = 0; j < cardsToAdd[0].length; j++){
+			for (int j = 0; j < cardsToAdd[0].length; j++) {
 				this.piles.get(i)
 				.add(new Card(cardsToAdd[i][j][0], 
 						cardsToAdd[i][j][1])); // rank and suit respectively 
@@ -161,7 +161,7 @@ public class WarGameTest {
 
 	// test this problematic four-person game
 	@Test
-	public void testFourPersonGame(){
+	public void testFourPersonGame() {
 		WarGame testWar = new WarGame(4, 13, 4);
 		testWar.runWarGame();
 		
@@ -170,7 +170,7 @@ public class WarGameTest {
 	}
 	// And what the heck... :]
 	@Test
-	public void testElevenPersonGame(){
+	public void testElevenPersonGame() {
 		WarGame testWar = new WarGame(8, 11, 11);
 		testWar.runWarGame();
 		

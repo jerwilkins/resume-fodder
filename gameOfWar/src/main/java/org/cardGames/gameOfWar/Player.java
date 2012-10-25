@@ -57,7 +57,7 @@ public class Player {
 	 * appends cards to player's play pile
 	 * @param cards
 	 */
-	void addToOwnPile(LinkedList<Card> cards){
+	void addToOwnPile(LinkedList<Card> cards) {
 		this.ownPile.addAll(cards);
 	}
 

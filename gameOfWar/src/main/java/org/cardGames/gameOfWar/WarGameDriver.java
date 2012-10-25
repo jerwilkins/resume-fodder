@@ -15,7 +15,7 @@ public class WarGameDriver {
 	 */
 	public static void main(String[] args) {
 		int suits, ranks, players;
-		if(args.length != 3){
+		if (args.length != 3) {
 			System.out
 					.println("War should be played with the following options: <ranks> <suits> <players>. E.g.:");
 			System.out.println("java -jar war.jar 4 13 2");
@@ -26,7 +26,7 @@ public class WarGameDriver {
 			ranks = Integer.parseInt(args[1]);
 			players = Integer.parseInt(args[2]);
 		}
-		catch(NumberFormatException e){
+		catch(NumberFormatException e) {
 			System.out.println("Arguments must be integers (and not insanely huge).");
 			System.out.println("Usage example: java -jar war.jar 4 13 2");
 			return;

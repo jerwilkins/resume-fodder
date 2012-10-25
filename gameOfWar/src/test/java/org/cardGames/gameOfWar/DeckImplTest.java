@@ -14,12 +14,12 @@ public class DeckImplTest {
 	}
 	
 	@Test // Deal should give us a single card
-	public void testDeal(){
+	public void testDeal() {
 		setup();
 		assertTrue(this.deck1.deal() instanceof Card);
 	}
 	
-	public void setup(){
+	public void setup() {
 		this.deck1 = new DeckImpl(4,13);
 	}
 	

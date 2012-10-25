@@ -9,5 +9,5 @@
 *.iml
 
 # target files #
-target/*
-.idea/*
+*/target/*
+*/.idea/*

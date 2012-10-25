@@ -51,12 +51,12 @@ public class WarGame{
 		this.numberOfPlayers = numberOfPlayers;
 		
 		// cards must be divisible by players
-		if(warDeck.getCards().size() % numberOfPlayers != 0){
+		if (warDeck.getCards().size() % numberOfPlayers != 0) {
 			System.out
 					.println("Cards must be equally divisible by number of players.");
 			this.validGame = false;
 		}
-		else if(warDeck.getCards().size() / numberOfPlayers < 4) {
+		else if (warDeck.getCards().size() / numberOfPlayers < 4) {
 			System.out.println("A deck must have at least "
 					+ cardsNeededPerPlayer + " to play a round of War.");
 			this.validGame = false;
@@ -78,9 +78,9 @@ public class WarGame{
 		 * to some weird bugs if the classes were re-purposed for another game
 		 * or, you know, card tricks or something 
 		 */
-		for(int i = initialPileSize; i > 0; i--){
+		for (int i = initialPileSize; i > 0; i--) {
 			Iterator<Player> playerIterator = this.players.iterator();
-			while(playerIterator.hasNext()){
+			while (playerIterator.hasNext()) {
 				LinkedList<Card> card = new LinkedList<Card>();
 				card.add(this.warDeck.deal());
 				playerIterator.next().addToOwnPile(card);
@@ -101,15 +101,15 @@ public class WarGame{
 	 * Method runs war battles, provided the game is valid
 	 * and there are still more than one players with cards
 	 */
-	public void runWarGame(){
-		if(this.isValidGame()){
-			while(!this.isGameResolved()){
+	public void runWarGame() {
+		if (this.isValidGame()) {
+			while (!this.isGameResolved()) {
 				this.battle(this.players, 1);
 				this.battlesFought++;
 			}
 			System.out.println("Game complete.");
 			resolveGameWinningPlayer();
-			if(this.gameWinningPlayer == null){
+			if (this.gameWinningPlayer == null) {
 				System.out.println("No winning player; weird!");
 				System.out.println("Game ended with "
 						+ this.getAllCardsInGame().size());
@@ -132,9 +132,9 @@ public class WarGame{
 	 */
 	private void resolveGameWinningPlayer() {
 		Iterator<Player> playerIterator = this.players.iterator();
-		while(playerIterator.hasNext()){
+		while (playerIterator.hasNext()) {
 			Player player = playerIterator.next();
-			if(player.getOwnPile().size() == this.warDeck.getInitialSize()){
+			if (player.getOwnPile().size() == this.warDeck.getInitialSize()) {
 				this.gameWinningPlayer = player;
 			}
 		}
@@ -161,8 +161,8 @@ public class WarGame{
 	 */
 	public boolean isGameResolved() {
 		int activePlayers = 0;
-		for (Player player : this.players){
-			if (player.getOwnPile().size() > 0){
+		for (Player player : this.players) {
+			if (player.getOwnPile().size() > 0) {
 				activePlayers++;
 			}
 		}
@@ -183,7 +183,7 @@ public class WarGame{
 	 */
 	private void setupPlayers() {
 		this.players = new LinkedList<Player>();
-		for(int i = 0; i < this.numberOfPlayers; i++){
+		for (int i = 0; i < this.numberOfPlayers; i++) {
 			Player player = new Player();
 			player.setPlayerNumber(i+1);
 			this.players.add(player);
@@ -206,13 +206,13 @@ public class WarGame{
 		LinkedList<Player> tiedPlayers = new LinkedList<Player>();
 		
 		winningPlayer = determineBattleWinner(playersThisBattle, tiedPlayers);
-		if(winningPlayer != null) {
+		if (winningPlayer != null) {
 			giveWinnerCards(playersThisBattle, winningPlayer);
 		}
 		// if there is a tie, battle is called recursively
 		// unless one of the players has no remaining cards
 		// in which case, those cards will go to the other player
-		else if(tiedPlayers.size() > 0){
+		else if (tiedPlayers.size() > 0) {
 			manageTie(tiedPlayers);
 		}
 	}
@@ -226,11 +226,11 @@ public class WarGame{
 	private void designateAppropriatePlayers(LinkedList<Player> playersThisBattle,
 			int battleSize) {
 		Iterator<Player> playerIterator = playersThisBattle.iterator();
-		while(playerIterator.hasNext()){
+		while (playerIterator.hasNext()) {
 			Player player = playerIterator.next();
 			// remove players with no remaining cards; 
 			// add them to the removedPlayers collection for reference
-			if(player.getOwnPile().size() == 0){
+			if (player.getOwnPile().size() == 0) {
 				this.cardsInLimbo.addAll(player.getCardsInJeopardy());
 				player.getCardsInJeopardy().clear();
 				this.removedPlayers.add(player);
@@ -252,10 +252,10 @@ public class WarGame{
 		LinkedList<Card> cardsInPlay, cardsInJeopardy;
 		player.setCardInBattle(floorCard);
 		// standard battle yields size-one elements
-		if(battleSize == 1){
+		if (battleSize == 1) {
 			cardsInJeopardy = new LinkedList<Card>();
 			cardsInPlay = new LinkedList<Card>();
-			if(!player.getOwnPile().isEmpty()){
+			if (!player.getOwnPile().isEmpty()) {
 				cardsInJeopardy.add(player.getOwnPile().get(0));
 				cardsInPlay.add(player.getOwnPile().get(0));
 			}
@@ -265,7 +265,7 @@ public class WarGame{
 			 * the War battle size, just use their full pile
 			 * 
 			 */
-			if(player.getOwnPile().size() < battleSize) {
+			if (player.getOwnPile().size() < battleSize) {
 				cardsInJeopardy = new LinkedList<Card>(player.getOwnPile());
 				cardsInPlay =  new LinkedList<Card>(player.getOwnPile());
 			}
@@ -295,22 +295,22 @@ public class WarGame{
 		Card battleWinningCard = floorCard;
 		Player winningPlayer = null;
 		Iterator<Player> playerIterator = playersThisBattle.iterator();
-		while(playerIterator.hasNext()){
+		while (playerIterator.hasNext()) {
 			Player player = playerIterator.next();
 
 			player.setCardInBattle(player.getCardsInPlay().get(0));
 			
 			// if player's cardInBattle exceeds current highest card
 			// player is set winner
-			if(player.getCardInBattle().compareTo(battleWinningCard) > 0){
+			if (player.getCardInBattle().compareTo(battleWinningCard) > 0) {
 				winningPlayer = player;
-				if(winningPlayer != null){
+				if (winningPlayer != null) {
 					winningPlayer = null;
 				}
 				winningPlayer = player;
 				battleWinningCard = player.getCardInBattle();
 				Iterator<Player> tiedPlayersIterator = tiedPlayers.iterator();
-				while(tiedPlayersIterator.hasNext()){
+				while (tiedPlayersIterator.hasNext()) {
 					Player tiedPlayer = tiedPlayersIterator.next();
 					this.cardsInLimbo.addAll(tiedPlayer.getCardsInJeopardy());
 					tiedPlayer.getCardsInJeopardy().clear();
@@ -318,8 +318,8 @@ public class WarGame{
 				}
 			}
 			// establish a tie; unwin our presumptive players, if any
-			else if(player.getCardInBattle().compareTo(battleWinningCard) == 0){
-				if(winningPlayer != null){
+			else if (player.getCardInBattle().compareTo(battleWinningCard) == 0) {
+				if (winningPlayer != null) {
 					tiedPlayers.add(winningPlayer);
 					winningPlayer = null;
 				}
@@ -328,9 +328,9 @@ public class WarGame{
 				Iterator<Player> tiedPlayersIterator = tiedPlayers.iterator();
 				// Ensure that if there are tied players from before,
 				// they remain tied against the new battleWinningCard
-				while(tiedPlayersIterator.hasNext()){
+				while (tiedPlayersIterator.hasNext()) {
 					Player tiedPlayer = tiedPlayersIterator.next();
-					if(tiedPlayer.getCardInBattle().compareTo(battleWinningCard) < 0){
+					if (tiedPlayer.getCardInBattle().compareTo(battleWinningCard) < 0) {
 						this.cardsInLimbo.addAll(tiedPlayer.getCardsInJeopardy());
 						tiedPlayer.getCardsInJeopardy().clear();
 						tiedPlayersIterator.remove();
@@ -354,7 +354,7 @@ public class WarGame{
 	 */
 	public LinkedList<Card> getAllCardsInGame() { 
 		LinkedList<Card> allCards = new LinkedList<Card>();
-		for(Player onePlayer : this.players){
+		for (Player onePlayer : this.players) {
 			allCards.addAll(onePlayer.getOwnPile());
 			allCards.addAll(onePlayer.getCardsInJeopardy());
 		}
@@ -370,14 +370,14 @@ public class WarGame{
 	 */
 	private void giveWinnerCards(LinkedList<Player> playersThisBattle, Player winningPlayer) {
 		// if there is a winning player, battle is resolved
-		if(winningPlayer != null){
-			if(this.cardsInLimbo != null){
+		if (winningPlayer != null) {
+			if (this.cardsInLimbo != null) {
 				winningPlayer.addToOwnPile(this.cardsInLimbo);
 				this.cardsInLimbo.clear();
 			}
 			Iterator<Player> playerIterator = playersThisBattle.iterator();
 			// Give the winning player the cards from all losing players this battle/war
-			while(playerIterator.hasNext()){
+			while (playerIterator.hasNext()) {
 				LinkedList<Card> giveToWinner = new LinkedList<Card>();
 				Player player = playerIterator.next();
 				giveToWinner = player.getCardsInJeopardy();
@@ -395,7 +395,7 @@ public class WarGame{
 	 */
 	private void manageTie(LinkedList<Player> tiedPlayers) {
 		Iterator<Player> playerIterator = tiedPlayers.iterator();
-		while(playerIterator.hasNext()){
+		while (playerIterator.hasNext()) {
 			Player tiedPlayer = playerIterator.next();
 			this.cardsInLimbo.addAll(tiedPlayer.getCardsInJeopardy()); 
 			tiedPlayer.getCardsInJeopardy().clear();
@@ -403,15 +403,15 @@ public class WarGame{
 			// ensures that ties only execute when all tied players
 			// have additional cards to play; otherwise, the player
 			// with cards takes all cards in the limbo stack
-			if(tiedPlayer.getOwnPile().size() == 0){
+			if (tiedPlayer.getOwnPile().size() == 0) {
 				playerIterator.remove();
 			}
 		}
-		if(tiedPlayers.size() > 1){
+		if (tiedPlayers.size() > 1) {
 			battle(tiedPlayers, this.warHandSize);
 			this.warsFought++;
 		}
-		else if(tiedPlayers.size() == 1){
+		else if (tiedPlayers.size() == 1) {
 			tiedPlayers.get(0).addToOwnPile(this.cardsInLimbo);
 			this.cardsInLimbo.clear();
 		}
@@ -445,7 +445,7 @@ public class WarGame{
 	 * another method wholly for test coverage
 	 * @param cards
 	 */
-	public void setWarTestDeck(LinkedList<Card> cards){
+	public void setWarTestDeck(LinkedList<Card> cards) {
 		this.warDeck.setCards(cards);
 	}
 

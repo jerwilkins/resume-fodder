@@ -13,7 +13,7 @@ public class Card implements Comparable<Card> {
 	 * @param suit
 	 * @param rank
 	 */
-	public Card(int suit, int rank){
+	public Card(int suit, int rank) {
 		this.suit = suit;
 		this.rank = rank;
 	}
@@ -28,7 +28,7 @@ public class Card implements Comparable<Card> {
 	 * would want to override for games where suit
 	 * is significant 
 	 */
-	public int compareTo(Card card1){
+	public int compareTo(Card card1) {
 		return this.getRank() - card1.getRank();
 	}
 
